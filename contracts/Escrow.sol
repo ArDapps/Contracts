@@ -5,11 +5,14 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 import "./interfaces/IOffer.sol";
 
-contract ZKRent_Escrow {
+contract Escrow {
 
     // Public Personnal details
     string name;
     string selfDescription;
+
+    // Ownership via address:
+    address owner;
 
 
     struct Offer {
@@ -22,15 +25,16 @@ contract ZKRent_Escrow {
         address offerAddress;
     }
 
-    IERC20 DAI;
+    IERC20 TOKEN = IERC20(0xDDAfbb505ad214D7b80b1f830fcCc89B60fb7A83);
 
     uint256[] ids;
     mapping (uint256 => Offer) offerIDtoOffer;
 
-    constructor(address _DAIAddress, string memory _name, string memory _selfDescription) {
-        DAI = IERC20(_DAIAddress);
+    constructor(string memory _name, string memory _selfDescription, address _owner) {
+
         name = _name;
         selfDescription = _selfDescription;
+        owner = _owner;
     }
 
     function applyToOffer(uint256 _offerID, uint[2] memory a, uint[2][2] memory b, uint[2] memory c, uint[10] memory input) public {
