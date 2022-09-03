@@ -2,19 +2,41 @@
 pragma solidity ^0.8.16;
 
 import "./interfaces/IOffer.sol";
+import "./Offer.sol";
+import "./Verifier.sol";
 
-contract OfferRegistry {
-    struct Offer {
+contract OfferFactory {
+    struct OfferData {
         address offerContractAddress;
         string description;
         uint incomeRequirement;
         address owner;
     }
 
-    Offer[] offers;
+    OfferData[] offers;
+
+    event NewOffer(address offerAddress);
 
     // mapping(address => bool) isOfferRunning; NOT HERE -> Considering that an offer is running while 
     // it is in the registry
+
+    // Deploy a new offer verifier contract 
+    function newOffer(string memory description, uint incomeRequirement, uint depositRequirement) external {
+        // Deploy the contract
+        Offer offerContract = new Offer(description,incomeRequirement,depositRequirement);
+
+        // Create the offer
+        OfferData memory newOffer;
+        newOffer.offerContractAddress = address(offerContract);
+        newOffer.description = description;
+        newOffer.incomeRequirement = incomeRequirement;
+        newOffer.owner = msg.sender;
+
+        // Push the new offer on the array
+        offers.push(newOffer);
+
+        emit NewOffer(address(offerContract));
+    }
 
     /// Add an existing offer verifier contract to the registry
     function addOffer(address offerContractAddress) external {
@@ -24,7 +46,7 @@ contract OfferRegistry {
         uint incomeRequirement = IOffer(offerContractAddress).incomeRequirement();
 
         // Create the offer
-        Offer memory newOffer;
+        OfferData memory newOffer;
         newOffer.offerContractAddress = offerContractAddress;
         newOffer.description = description;
         newOffer.incomeRequirement = incomeRequirement;

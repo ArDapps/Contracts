@@ -11,10 +11,14 @@ contract EscrowFactory {
     address[] escrows;
     mapping(address => address) escrowToOwner;
 
+    event NewEscrow(address newEscrowAddress);
+
     // function to create a new escrow contract for one applicant. Needs to be called by the applicant
     function createNewEscrow(string memory name, string memory description) external {
         Escrow newEscrow = new Escrow(name, description,msg.sender);
         escrows.push(address(newEscrow));
         escrowToOwner[address(newEscrow)] = msg.sender;
+
+        emit NewEscrow(address(newEscrow));
     }
 }

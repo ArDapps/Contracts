@@ -9,3 +9,6 @@ typechain-types
 cache
 artifacts
 
+#zk non used files
+zk
+

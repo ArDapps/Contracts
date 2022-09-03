@@ -6,5 +6,5 @@ interface IOffer {
     function owner() external view returns(address);
     function incomeRequirement() external view returns(uint);
     function description() external view returns(string memory);
-    function registerApplicant(string memory _name, string memory _description,  uint[2] memory a, uint[2][2] memory b, uint[2] memory c, uint[10] memory input) external;
+    function registerApplicant(string memory _name, string memory _description,  uint[2] memory a, uint[2][2] memory b, uint[2] memory c, uint[8] memory input) external;
 }

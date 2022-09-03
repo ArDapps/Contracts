@@ -38,6 +38,12 @@ contract Offer is IOffer, Verifier {
     //TOKEN NEED TO REMOVE HARDCODED VALUE I GUESS
     IERC20 TOKEN = IERC20(0xDDAfbb505ad214D7b80b1f830fcCc89B60fb7A83);
 
+    constructor(string memory _description, uint _incomeRequirement, uint _depositRequirement) {
+        description = _description;
+        incomeRequirement = _incomeRequirement;
+        depositRequirement = _depositRequirement;
+    }
+
     // We choose the applicant via the index in the array
     function chooseApplicant(uint index) public {
         require(!isApplicantChosen, "Applicant already choosen");
@@ -46,7 +52,7 @@ contract Offer is IOffer, Verifier {
         deadlineForAcceptance = block.timestamp + TIME_FOR_ACCEPTANCE;
     }
 
-    function registerApplicant(string memory _name, string memory _description,  uint[2] memory a, uint[2][2] memory b, uint[2] memory c, uint[10] memory input) external {
+    function registerApplicant(string memory _name, string memory _description,  uint[2] memory a, uint[2][2] memory b, uint[2] memory c, uint[8] memory input) external {
         // First check the proof
         bool isProofValid = verifyProof(a, b, c, input);
         require(isProofValid, "Invalid proof");

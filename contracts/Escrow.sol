@@ -37,7 +37,7 @@ contract Escrow {
         owner = _owner;
     }
 
-    function applyToOffer(uint256 _offerID, uint[2] memory a, uint[2][2] memory b, uint[2] memory c, uint[10] memory input) public {
+    function applyToOffer(uint256 _offerID, uint[2] memory a, uint[2][2] memory b, uint[2] memory c, uint[8] memory input) public {
         Offer memory offerToApply = offerIDtoOffer[_offerID];
         
         // registration on the offer, the verification is done on the offer side.
@@ -46,6 +46,10 @@ contract Escrow {
 
     // TODO The locking of the funds on the escrow
 
+    function addFundsToEscrow(uint amount) public {
+        TOKEN.transferFrom(msg.sender, address(this), amount);
+    }
 
+    
 
 }
