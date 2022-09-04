@@ -93,6 +93,7 @@ describe("UseCase", function () {
        // replace with your signals
       await generateWitness(inputSignals)
       const { proof, publicSignals } = await snarkjs.groth16.prove(zkey, WITNESS_FILE);
+      // console.log(proof)
       
       // const { proof, publicSignals } = await groth16.fullProve({"incomeRequirement":5000,"income":10000}, "contracts/circuits/circuit_js/circuit.wasm","contracts/circuits/circuit_final.zkey");
         
@@ -101,7 +102,7 @@ describe("UseCase", function () {
       // console.log(calldata)
       // Doing some formatting to get an array of strings from the array of arrays of bigNumbers that we have in calldata
       const argv = calldata.replace(/["[\]\s]/g, "").split(',').map(x => BigInt(x).toString());
-      // console.log(argv)
+      console.log(argv)
       //The next lines are the creation of the correct parameters for the contract call
       const a = [argv[0], argv[1]];
       const b = [[argv[2], argv[3]], [argv[4], argv[5]]];

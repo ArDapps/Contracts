@@ -7,20 +7,17 @@
 const hre = require("hardhat");
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
+  const OfferFactory = await hre.ethers.getContractFactory("OfferFactory");
+  offerFactory = await OfferFactory.deploy();
+  await offerFactory.deployed();
+  console.log(`OfferFactory: ${offerFactory.address}`);
+  
+  const EscrowFactory = await hre.ethers.getContractFactory("EscrowFactory");
+  escrowFactory = await EscrowFactory.deploy(offerFactory.address);
+  await escrowFactory.deployed();
+  console.log(`EscrowFactory: ${escrowFactory.address}`);
 
-  const lockedAmount = hre.ethers.utils.parseEther("1");
 
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
-
-  await lock.deployed();
-
-  console.log(
-    `Lock with 1 ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
-  );
 }
 
 // We recommend this pattern to be able to use async/await everywhere
