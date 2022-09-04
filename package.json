@@ -6,6 +6,8 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.7.3",
-    "circomlib": "^2.0.5"
+    "circom_tester": "^0.0.17",
+    "circomlib": "^2.0.5",
+    "snarkjs": "^0.4.26"
   }
 }

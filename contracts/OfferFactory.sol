@@ -13,7 +13,7 @@ contract OfferFactory {
         address owner;
     }
 
-    OfferData[] offers;
+    OfferData[] public offers;
 
     event NewOffer(address offerAddress);
 
@@ -59,5 +59,9 @@ contract OfferFactory {
     // NEED TO HAVE A WAY OF REMOVING THE OFFERS
     function removeOffer(address offerContractAddress) external {
 
+    }
+
+    function getAddressOfOffer(uint index) public returns(address){
+        return offers[index].offerContractAddress;
     }
 }
